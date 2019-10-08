@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/item.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,26 +19,36 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  var items = new List<Item>();
+
+  HomePage() {
+    items = [];
+    items.add(Item(titulo: 'Item 1', done: false));
+    items.add(Item(titulo: 'Item 2', done: true));
+    items.add(Item(titulo: 'Item 3', done: false));
+  }
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    /*return Container(
-      child: Text('Olá Mundo lol'),
-    );*/
     return Scaffold(
-      appBar: AppBar(
-        leading: Text('Inicio'),
-        title: Text('Meu Primeiro Flutter App'),
-        centerTitle: true,
-        actions: <Widget>[
-          Icon(Icons.arrow_right),
-        ],
-      ),
-      body: Container(
-        child: Center(
-          child: Text('Olá Mundo Flutter App'),
+        appBar: AppBar(
+          leading: Text('Inicio'),
+          title: Text('Meu Primeiro Flutter App'),
+          centerTitle: true,
+          actions: <Widget>[
+            Icon(Icons.arrow_right),
+          ],
         ),
-      ),
-    );
+        body: ListView.builder(
+          itemCount: widget.items.length,
+          itemBuilder: (BuildContext buildContext, int index) {
+            return Center(child: Text(widget.items[index].titulo));
+          },
+        ));
   }
 }
