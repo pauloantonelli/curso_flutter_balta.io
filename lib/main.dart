@@ -54,6 +54,9 @@ class _HomePageState extends State<HomePage> {
               value: item.done,
               onChanged: (value) {
                 print(value);
+                setState(() {
+                  item.done = value;
+                });
               },
             ); // Center(child: Text(item.titulo));
           },
