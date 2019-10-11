@@ -33,12 +33,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var newTaskCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           leading: Text('Inicio'),
-          title: Text('Meu Primeiro Flutter App'),
+          title: TextFormField(
+            controller: newTaskCtrl,
+            keyboardType: TextInputType.text,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+            decoration: InputDecoration(
+              labelText: 'Digite sua nova tarefa',
+              labelStyle: TextStyle(color: Colors.white),
+            ),
+          ),
           centerTitle: true,
           actions: <Widget>[
             Icon(Icons.arrow_right),
