@@ -34,44 +34,63 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var newTaskCtrl = TextEditingController();
+
+  void addNewItemList() {
+    if (newTaskCtrl.text.isEmpty) return;
+    setState(() {
+      widget.items.add(Item(titulo: newTaskCtrl.text, done: false));
+      newTaskCtrl.text = '';
+      // newTaskCtrl.clear(); // limpa o texto do input
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: Text('Inicio'),
-          title: TextFormField(
-            controller: newTaskCtrl,
-            keyboardType: TextInputType.text,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
-            decoration: InputDecoration(
-              labelText: 'Digite sua nova tarefa',
-              labelStyle: TextStyle(color: Colors.white),
-            ),
+      appBar: AppBar(
+        leading: Text('Inicio'),
+        title: TextFormField(
+          controller: newTaskCtrl,
+          keyboardType: TextInputType.text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
           ),
-          centerTitle: true,
-          actions: <Widget>[
-            Icon(Icons.arrow_right),
-          ],
+          decoration: InputDecoration(
+            labelText: 'Digite sua nova tarefa',
+            labelStyle: TextStyle(color: Colors.white),
+          ),
         ),
-        body: ListView.builder(
-          itemCount: widget.items.length,
-          itemBuilder: (BuildContext buildContext, int index) {
-            final item = widget.items[index];
-            return CheckboxListTile(
-              title: Text(item.titulo),
-              key: Key(item.titulo),
-              value: item.done,
-              onChanged: (value) {
-                print(value);
-                setState(() {
-                  item.done = value;
-                });
-              },
-            ); // Center(child: Text(item.titulo));
-          },
-        ));
+        centerTitle: true,
+        actions: <Widget>[
+          Icon(Icons.arrow_right),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: widget.items.length,
+        itemBuilder: (BuildContext buildContext, int index) {
+          final item = widget.items[index];
+          return CheckboxListTile(
+            title: Text(item.titulo),
+            key: Key(item.titulo),
+            value: item.done,
+            onChanged: (value) {
+              print(value);
+              setState(() {
+                item.done = value;
+              });
+            },
+          ); // Center(child: Text(item.titulo));
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print('Botao pressionado');
+          addNewItemList();
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 }
