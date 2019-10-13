@@ -47,12 +47,14 @@ class _HomePageState extends State<HomePage> {
       widget.items.add(Item(titulo: newTaskCtrl.text, done: false));
       newTaskCtrl.text = '';
       // newTaskCtrl.clear(); // limpa o texto do input
+      saveItems();
     });
   }
 
   void removeItemList(int index) {
     setState(() {
       widget.items.removeAt(index);
+      saveItems();
     });
   }
 
@@ -68,6 +70,11 @@ class _HomePageState extends State<HomePage> {
         widget.items = result;
       });
     }
+  }
+
+  saveItems() async {
+    var preferenciesItems = await SharedPreferences.getInstance();
+    await preferenciesItems.setString('data', jsonEncode(widget.items));
   }
 
   @override
@@ -104,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                 print(value);
                 setState(() {
                   item.done = value;
+                  saveItems();
                 });
               },
             ),
